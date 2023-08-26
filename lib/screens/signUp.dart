@@ -321,7 +321,9 @@ class _SignUpState extends State<SignUp> {
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, LogIn.id);
+                            },
                             child: Text(
                               "Have an account? Log in",
                               style: TextStyle(fontSize: 20),

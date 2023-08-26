@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           ForgetPassword.id : (context) => ForgetPassword(),
           HomePage.id : (context) => HomePage(),
         },
-      home: HomePage(),
+      home: SignUp(),
       theme: ThemeData(
         useMaterial3: true
       ),

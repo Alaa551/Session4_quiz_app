@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz_app/models/userModel.dart';
+import 'package:quiz_app/screens/forget_password.dart';
 import 'package:quiz_app/screens/homePage.dart';
 
 class LogIn extends StatefulWidget {
@@ -17,7 +18,7 @@ class _LogInState extends State<LogIn> {
 
   @override
   Widget build(BuildContext context) {
-    var userData = ModalRoute.of(context)?.settings.arguments as UserModel;
+    UserModel? userData = ModalRoute.of(context)?.settings.arguments as UserModel?;
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -41,8 +42,10 @@ class _LogInState extends State<LogIn> {
                   children: [
                     TextFormField(
                       validator: (value){
-                        if(value != userData.email){
-                          return "incorrect email";
+                        if(userData!=null) {
+                          if (value != userData.email) {
+                            return "incorrect email";
+                          }
                         }
                         return null;
                       },
@@ -60,8 +63,10 @@ class _LogInState extends State<LogIn> {
                     ),
                     TextFormField(
                       validator: (value){
-                        if(value != userData.password){
-                          return "incorrect email";
+                        if(userData!=null) {
+                          if (value != userData.password) {
+                            return "incorrect password";
+                          }
                         }
                         return null;
                       },
@@ -109,6 +114,25 @@ class _LogInState extends State<LogIn> {
               height: 50,
               elevation: 10,
               color: Colors.orange,
+              shape: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: Colors.orange)),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            MaterialButton(
+              onPressed: () {
+                  Navigator.pushNamed(context, ForgetPassword.id,arguments: userData?.email);
+              },
+              child: Text(
+                "Forget password",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              minWidth: 360,
+              height: 50,
+              elevation: 10,
+              color: Colors.black,
               shape: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: BorderSide(color: Colors.orange)),

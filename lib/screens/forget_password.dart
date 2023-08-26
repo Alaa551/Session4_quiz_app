@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:quiz_app/core/customSnackBar.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});
@@ -12,8 +13,12 @@ class ForgetPassword extends StatefulWidget {
 }
 
 class _ForgetPasswordState extends State<ForgetPassword> {
+  final GlobalKey<FormState> formState = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
+    String? userEmail = ModalRoute.of(context)?.settings.arguments as String?;
+
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -36,18 +41,37 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       color: Colors.black),
                 ),
                 SizedBox(height: 20,),
-                TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: "Email",
-                    border: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black, width: 2),
-                        borderRadius: BorderRadius.circular(15)),
+                Form(
+                  key: formState,
+                  child: TextFormField(
+                    validator: (value){
+                      if(value!= userEmail){
+                        return "incorrect email";
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      labelText: "Email",
+                      border: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black, width: 2),
+                          borderRadius: BorderRadius.circular(15)),
+                    ),
                   ),
                 ),
                 SizedBox(height: 20,),
                 MaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if(userEmail!=null) {
+                      if (formState.currentState!.validate()) {
+                        CustomSnackBar.show(
+                            context: context, content: "check your email");
+                        return;
+                      }}
+                      CustomSnackBar.show(
+                          context: context, content: "check your email");
+
+                  },
                   child: Text(
                     "Submit",
                     style: TextStyle(color: Colors.white, fontSize: 20),
